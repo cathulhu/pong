@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Diagnostics;
+using System.Threading;
 
 public partial class GameScene : Node2D
 {
@@ -10,12 +12,22 @@ public partial class GameScene : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// Allows us to process inputs even while paused in _Input()
+		ProcessMode = ProcessModeEnum.Always;
 		resetBall();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape)
+		{
+			TogglePauseGame();
+		}
 	}
 
 	public void resetBall()
@@ -50,5 +62,10 @@ public partial class GameScene : Node2D
 		}
 		ScoreLabel.Text = $"{ScoreLeft} - {ScoreRight}";
 		resetBall();
+	}
+
+	public void TogglePauseGame()
+	{
+		GetTree().Paused = !GetTree().Paused;
 	}
 }
