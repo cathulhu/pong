@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bttn861ors3ni"]
+
+[ext_resource type="Script" uid="uid://c30igtkm8s5f2" path="res://Bumper.cs" id="1_1e4q4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d85yw"]
+size = Vector2(1152, 24)
+
+[node name="Bumper" type="StaticBody2D"]
+script = ExtResource("1_1e4q4")
+
+[node name="barrierShape" type="CollisionShape2D" parent="."]
+position = Vector2(576, -12)
+shape = SubResource("RectangleShape2D_d85yw")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://df7cymg12a5h2"]
+
+[ext_resource type="Script" uid="uid://dsqggkm7qyh5d" path="res://ScoreArea.cs" id="1_s2uo0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56rio"]
+size = Vector2(131.789, 968.13)
+
+[node name="ScoreArea" type="StaticBody2D"]
+script = ExtResource("1_s2uo0")
+
+[node name="ScoreCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-31.3093, 323.525)
+rotation = 3.14159
+scale = Vector2(0.496108, -0.719893)
+shape = SubResource("RectangleShape2D_56rio")

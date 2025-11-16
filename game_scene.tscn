@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxiqq7w7tvlh0"]
+
+[ext_resource type="Script" uid="uid://cmc1hejhtdowc" path="res://GameScene.cs" id="1_mj2jn"]
+[ext_resource type="PackedScene" uid="uid://mg1tqbji2a2p" path="res://paddle.tscn" id="1_mlf6e"]
+[ext_resource type="PackedScene" uid="uid://ccfkil684n5vl" path="res://ball.tscn" id="2_po0ka"]
+[ext_resource type="PackedScene" uid="uid://bttn861ors3ni" path="res://Bumper.tscn" id="3_v1wow"]
+[ext_resource type="PackedScene" uid="uid://df7cymg12a5h2" path="res://ScoreArea.tscn" id="4_mixcd"]
+
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("ScoreLabel")]
+script = ExtResource("1_mj2jn")
+ScoreLabel = NodePath("scoreUI")
+
+[node name="paddleLeft" parent="." instance=ExtResource("1_mlf6e")]
+physics_interpolation_mode = 2
+position = Vector2(24, 265)
+disable_mode = 1
+
+[node name="ball" parent="." node_paths=PackedStringArray("gameScene") instance=ExtResource("2_po0ka")]
+position = Vector2(624, 265)
+scale = Vector2(0.998773, 1.01343)
+mass = 0.001
+gameScene = NodePath("..")
+
+[node name="topBumper" parent="." instance=ExtResource("3_v1wow")]
+
+[node name="botBumper" parent="." instance=ExtResource("3_v1wow")]
+position = Vector2(0, 672)
+
+[node name="paddleRight" parent="." instance=ExtResource("1_mlf6e")]
+physics_interpolation_mode = 2
+position = Vector2(1128, 265)
+disable_mode = 1
+RightPaddle = true
+
+[node name="LeftScoreArea" parent="." instance=ExtResource("4_mixcd")]
+
+[node name="RightScoreArea" parent="." instance=ExtResource("4_mixcd")]
+position = Vector2(1216, 0)
+rightScore = true
+
+[node name="scoreUI" type="Label" parent="."]
+offset_left = 568.0
+offset_top = 80.0
+offset_right = 608.0
+offset_bottom = 103.0
+scale = Vector2(2.40606, 2.10406)
+text = "0 - 0"
