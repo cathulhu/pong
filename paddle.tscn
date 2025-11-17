@@ -7,6 +7,9 @@
 size = Vector2(18, 257)
 
 [node name="paddleCharacter" type="CharacterBody2D"]
+motion_mode = 1
+slide_on_ceiling = false
+safe_margin = 0.001
 script = ExtResource("1_tbytw")
 
 [node name="paddleSprite" type="Sprite2D" parent="."]

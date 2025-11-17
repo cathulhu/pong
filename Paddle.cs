@@ -6,12 +6,14 @@ public partial class Paddle : CharacterBody2D
 	[Export] public Boolean RightPaddle;
 	public int paddelSpeed = 200;
 	public Vector2 lastVector;
+	private float _Xposition;
 
 	public float lastVelocity;
 	// // Called when the node enters the scene tree for the first time.
-	// public override void _Ready()
-	// {
-	// }
+	public override void _Ready()
+	{
+		_Xposition = this.Position.X;
+	}
 	//
 	// // Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -24,7 +26,7 @@ public partial class Paddle : CharacterBody2D
 		var isUp = false;
 		lastVector = new Vector2(0, 0);
 		
-		//curiture simulation
+		//curviture simulation
 		
 		if (Input.IsKeyPressed(Key.W) && !RightPaddle)
 		{
@@ -49,9 +51,9 @@ public partial class Paddle : CharacterBody2D
 			MoveAndCollide(Vector2.Down * (float)timeDelta * paddelSpeed);
 			lastVector = new Vector2( 0, paddelSpeed);
 		}
-		
 
-		
-		
+		this.Position = new Vector2(_Xposition, this.Position.Y);
+
+
 	}
 }
