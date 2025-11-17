@@ -15,6 +15,10 @@ public partial class GameScene : Node2D
 		// Allows us to process inputs even while paused in _Input()
 		ProcessMode = ProcessModeEnum.Always;
 		resetBall();
+		GetTree().Paused = false;
+		
+		var meow = GetNode<Control>("Control");
+		GetTree().Paused = meow.Visible;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -67,5 +71,7 @@ public partial class GameScene : Node2D
 	public void TogglePauseGame()
 	{
 		GetTree().Paused = !GetTree().Paused;
+		var meow = GetNode<Control>("Control");
+		meow.Visible = GetTree().Paused;
 	}
 }
