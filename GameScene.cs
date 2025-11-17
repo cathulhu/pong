@@ -5,6 +5,7 @@ using System.Threading;
 
 public partial class GameScene : Node2D
 {
+	public bool shopOpen = false;
 	public int ScoreLeft = 0;
 	public int ScoreRight = 0;
 	[Export] public Label ScoreLabel;
@@ -16,9 +17,6 @@ public partial class GameScene : Node2D
 		ProcessMode = ProcessModeEnum.Always;
 		resetBall();
 		GetTree().Paused = false;
-		
-		var meow = GetNode<Control>("Control");
-		GetTree().Paused = meow.Visible;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,6 +29,29 @@ public partial class GameScene : Node2D
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape)
 		{
 			TogglePauseGame();
+		}
+
+		if (@event is InputEventKey && ((InputEventKey)@event).Pressed && ((InputEventKey)@event).Keycode == Key.P)
+		{
+			ToggleShopMenu();
+		}
+	}
+
+	public void ToggleShopMenu()
+	{
+		if (!shopOpen)
+		{
+			shopOpen = true;
+			var interfaceController = GetNode<Control>("interfaceController");
+			var shopScene = GD.Load<PackedScene>("res://shop.tscn");
+			var sceneInstance = shopScene.Instantiate<Control>();
+			interfaceController.AddChild(sceneInstance);
+		}
+		else
+		{
+			var controlToRemove = GetNode<Control>("interfaceController/shopControl");
+			controlToRemove.QueueFree();
+			shopOpen = false;
 		}
 	}
 
@@ -71,7 +92,22 @@ public partial class GameScene : Node2D
 	public void TogglePauseGame()
 	{
 		GetTree().Paused = !GetTree().Paused;
-		var meow = GetNode<Control>("Control");
-		meow.Visible = GetTree().Paused;
+		var interfaceController = GetNode<Control>("interfaceController");
+		
+		if (GetTree().Paused)
+		{
+			var pauseMenuScene = GD.Load<PackedScene>("res://main_menu.tscn");
+			var pauseMenuInstance = pauseMenuScene.Instantiate();
+			interfaceController.AddChild(pauseMenuInstance);
+		}
+		else
+		{
+			var controlToRemove = GetNode<Control>("interfaceController/menuControlRoot");
+
+			if (controlToRemove != null)
+			{
+				controlToRemove.QueueFree();
+			}
+		}
 	}
 }
